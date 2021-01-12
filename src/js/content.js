@@ -27,6 +27,18 @@ function pauseVideo() {
   }
 }
 
+function toggleFullScreenVideo() {
+  Debug.log("toggleFullScreenVideo");
+  if (!isVideoPage()) return;
+
+  const fullScreenButton = document.querySelector(
+    ".ytp-size-button.ytp-button"
+  );
+  if (fullScreenButton) {
+    fullScreenButton.click();
+  }
+}
+
 Debug.log("Initializing Voice Listener..");
 
 const listener = new VoiceListener({
@@ -45,13 +57,18 @@ const listener = new VoiceListener({
       case "pause":
         pauseVideo();
         break;
+      case "full-screen":
+        toggleFullScreenVideo();
+        break;
       default:
         throw new Error("Unsupported command!");
     }
   },
 });
 
-Debug.log("Starting Voice Listener speech tracking..");
-listener.start();
+setTimeout(() => {
+  listener.start();
+  Debug.log("Starting Voice Listener speech tracking..");
+}, 2000);
 
 export default {};
