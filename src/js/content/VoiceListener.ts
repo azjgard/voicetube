@@ -40,7 +40,9 @@ export default class VoiceListener {
     };
 
     this.recognition.onerror = (event) => {
-      throw new Error(event.error);
+      if (event.error !== "no-speech") {
+        throw new Error(event.error);
+      }
     };
 
     this.recognition.onend = (event) => {
