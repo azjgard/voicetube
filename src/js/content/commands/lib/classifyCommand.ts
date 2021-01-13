@@ -1,6 +1,10 @@
-type Command = "play" | "pause" | "full-screen";
+type Command = "play" | "pause" | "full-screen" | "search";
 
-export default function classifyCommand(text: string): Command | null {
+export function classifyCommand(text: string): Command | null {
+  if (/search/.test(text)) {
+    return "search";
+  }
+
   if (/play/.test(text)) {
     return "play";
   }

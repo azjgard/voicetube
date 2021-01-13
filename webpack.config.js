@@ -2,13 +2,13 @@ var webpack = require("webpack"),
   path = require("path"),
   fileSystem = require("fs"),
   env = require("./utils/env"),
-  CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin,
   CopyWebpackPlugin = require("copy-webpack-plugin"),
   HtmlWebpackPlugin = require("html-webpack-plugin"),
   WriteFilePlugin = require("write-file-webpack-plugin");
 
-// load the secrets
-var alias = {};
+var alias = {
+  "@utils": path.resolve(__dirname, "src/js/utils"),
+};
 
 var secretsPath = path.join(__dirname, "secrets." + env.NODE_ENV + ".js");
 
