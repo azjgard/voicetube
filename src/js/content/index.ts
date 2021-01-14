@@ -21,6 +21,9 @@ export default function content() {
         case "search":
           commands.search(text);
           break;
+        case "speed":
+          commands.speed(text);
+          break;
         case "play":
           commands.play();
           break;

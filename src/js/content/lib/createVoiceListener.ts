@@ -4,7 +4,7 @@ const SpeechGrammarList =
   window.SpeechGrammarList || (window as any).webkitSpeechGrammarList;
 
 const grammar =
-  "#JSGF V1.0; grammar phrase; public <phrase> = play | pause | skip | (stop | end | close) voice | full screen";
+  "#JSGF V1.0; grammar phrase; public <phrase> = play | pause | skip | (stop | end | close) voice | full screen | speed (1 | 2 | 3)";
 
 interface IArgs {
   onResult?: (text: string, event: Event) => void;

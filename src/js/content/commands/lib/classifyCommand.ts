@@ -1,19 +1,23 @@
-type Command = "play" | "pause" | "full-screen" | "search";
+type Command = "play" | "pause" | "full-screen" | "search" | "speed";
 
 export function classifyCommand(text: string): Command | null {
-  if (/search/.test(text)) {
+  if (/search/i.test(text)) {
     return "search";
   }
 
-  if (/play/.test(text)) {
+  if (/speed/i.test(text)) {
+    return "speed";
+  }
+
+  if (/play/i.test(text)) {
     return "play";
   }
 
-  if (/pause/.test(text)) {
+  if (/pause/i.test(text)) {
     return "pause";
   }
 
-  if (/screen/.test(text)) {
+  if (/screen/i.test(text)) {
     return "full-screen";
   }
 
