@@ -1,6 +1,14 @@
+import Debug from "@utils/Debug";
+import { PREFIX } from "./constants";
+
 type Command = "play" | "pause" | "full-screen" | "search" | "speed" | "link";
 
 export function classifyCommand(text: string): Command | null {
+  if (!new RegExp(PREFIX).test(text)) {
+    Debug.log(`Prefix ${PREFIX} not detected.`);
+    return null;
+  }
+
   if (/search/i.test(text)) {
     return "search";
   }
@@ -21,9 +29,9 @@ export function classifyCommand(text: string): Command | null {
     return "pause";
   }
 
-  if (/screen/i.test(text)) {
+  if (/(screen|theater)/i.test(text)) {
     return "full-screen";
   }
 
-  return null;
+  return "___" as Command;
 }

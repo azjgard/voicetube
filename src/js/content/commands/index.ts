@@ -14,4 +14,4 @@ export const commands = {
   link,
 };
 
-export { classifyCommand } from "./lib/classifyCommand";
+export { classifyCommand } from "../lib/classifyCommand";

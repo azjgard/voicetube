@@ -2,24 +2,37 @@ import Debug from "@utils/Debug";
 import { createViewElement } from "../views";
 
 const LINK_CHECK_INTERVAL_MS = 500;
-const LINK_CHECK_INTERVAL_TIMEOUT_MS = 10000;
+const LINK_CHECK_INTERVAL_TIMEOUT_MS = 5000;
 const LINK_DATA_ID_PROPERTY = "voice_link_id";
 
+/**
+ * Since YouTube thumbnails are added dynamically to the DOM, they won't
+ * all be present when the page finishes loading. This function polls the DOM
+ * every *linkCheckIntervalMs* for *linkCheckIntervalTimeoutMs*, checking the page
+ * each time for newly loaded thumbnails that haven't had links added to them yet.
+ * @param onNewLink callback function when a new link is found
+ */
 export default async function createVoiceLinks(
-  onNewLink: (voiceLinkId: string, href: string) => void
+  onNewLink: (voiceLinkId: string, href: string) => void,
+  linkCheckIntervalMs = LINK_CHECK_INTERVAL_MS,
+  linkCheckIntervalTimeoutMs = LINK_CHECK_INTERVAL_TIMEOUT_MS
 ) {
   Debug.log("Creating voice links..");
 
   const linkCheckInterval = setInterval(
     checkForThumbnails,
-    LINK_CHECK_INTERVAL_MS
+    linkCheckIntervalMs
   );
 
   setTimeout(
     () => clearInterval(linkCheckInterval),
-    LINK_CHECK_INTERVAL_TIMEOUT_MS
+    linkCheckIntervalTimeoutMs
   );
 
+  /**
+   * heuristic to avoid iterating through the queried thumbnails when
+   * the number of thumbnails found is the same as the last poll
+   */
   let linkCount = 0;
 
   function checkForThumbnails() {

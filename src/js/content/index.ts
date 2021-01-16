@@ -4,6 +4,7 @@ import { commands, classifyCommand } from "./commands";
 import InvalidCommandError from "./lib/errors/InvalidCommandError";
 import createVoiceLinks from "./lib/createVoiceLinks";
 import createVoiceListener from "./lib/createVoiceListener";
+import getCommandText from "./lib/getCommandText";
 
 export default function content() {
   Debug.log("Initializing Voice Listener..");
@@ -26,17 +27,23 @@ export default function content() {
         return;
       }
 
+      const commandText = getCommandText(text);
+
       Debug.log(`Command received: ${command}`);
 
       switch (command) {
         case "search":
-          commands.search(text);
+          commands.search(commandText);
           break;
         case "speed":
-          commands.speed(text);
+          commands.speed(commandText);
           break;
         case "link":
-          commands.link({ voiceLinkById, voiceLinksActive, text });
+          commands.link({
+            voiceLinkById,
+            voiceLinksActive,
+            text: commandText,
+          });
           break;
         case "play":
           commands.play();
@@ -48,7 +55,7 @@ export default function content() {
           commands.fullScreen();
           break;
         default:
-          throw new InvalidCommandError(text);
+          throw new InvalidCommandError(commandText);
       }
     },
   });
