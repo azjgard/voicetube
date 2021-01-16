@@ -1,4 +1,3 @@
-import PageSelector from "@utils/PageSelector";
 import constrainNumber from "../lib/constrainNumber";
 
 type ScrollAction = "scroll-up" | "scroll-down" | "scroll-stop";
@@ -32,31 +31,11 @@ export function scroll(action: ScrollAction) {
     });
   };
 
-  const getScrollAction = () => {
-    if (PageSelector.isHomePage()) {
-      return () => {
-        incrementScroll();
-        window.scrollTo({ top: currentScroll, behavior: "smooth" });
-      };
-    }
-
-    if (PageSelector.isVideoPage()) {
-      return () => {
-        incrementScroll();
-        // TODO: figure out the element that should scroll
-        return;
-      };
-    }
-
-    return null;
+  const scrollAction = () => {
+    incrementScroll();
+    window.scrollTo({ top: currentScroll, behavior: "smooth" });
   };
 
-  const scrollAction = getScrollAction();
-
-  if (scrollAction) {
-    scrollAction();
-    return setInterval(scrollAction, SCROLL_INTERVAL_MS);
-  }
-
-  return null;
+  scrollAction();
+  return setInterval(scrollAction, SCROLL_INTERVAL_MS);
 }

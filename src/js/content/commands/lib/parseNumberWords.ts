@@ -11,6 +11,7 @@ const NUMBER_WORDS = [
   ["for", "4"],
   ["four", "4"],
   ["five", "5"],
+  ["\\sv(\\s|$)", "5"],
   ["six", "6"],
   ["seven", "7"],
   ["eight", "8"],
@@ -22,7 +23,7 @@ const NUMBER_WORDS = [
 export default function numberWordsToNumbers(str: string) {
   return NUMBER_WORDS.reduce(
     (str, [existingValue, replacementValue]) =>
-      str.replace(existingValue, replacementValue),
+      str.replace(new RegExp(existingValue, "ig"), replacementValue),
     str
   );
 }
