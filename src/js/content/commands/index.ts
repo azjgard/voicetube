@@ -5,11 +5,11 @@ import { fullScreen } from "./fullScreen";
 import { speed } from "./speed";
 
 export const commands = {
-  play,
-  pause,
-  search,
-  fullScreen,
-  speed,
+    play,
+    pause,
+    search,
+    fullScreen,
+    speed,
 };
 
 export { classifyCommand } from "./lib/classifyCommand";

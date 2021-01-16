@@ -1,0 +1,16 @@
+.voice-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    background-color: purple;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    padding: 10px;
+    pointer-events: none;
+    font-size: 18px;
+    border: 1px solid #222;
+    box-shadow: 2px 2px 18px #555;
+}
