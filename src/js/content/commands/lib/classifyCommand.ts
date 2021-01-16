@@ -1,7 +1,16 @@
 import Debug from "@utils/Debug";
-import { PREFIX } from "./constants";
+import { PREFIX } from "../../lib/constants";
 
-type Command = "play" | "pause" | "full-screen" | "search" | "speed" | "link";
+type Command =
+  | "play"
+  | "pause"
+  | "full-screen"
+  | "search"
+  | "speed"
+  | "link"
+  | "scroll-up"
+  | "scroll-down"
+  | "scroll-stop";
 
 export function classifyCommand(text: string): Command | null {
   if (!new RegExp(PREFIX).test(text)) {
@@ -15,6 +24,18 @@ export function classifyCommand(text: string): Command | null {
 
   if (/speed/i.test(text)) {
     return "speed";
+  }
+
+  if (/scroll/i.test(text)) {
+    if (/scroll.*up/i.test(text)) {
+      return "scroll-up";
+    }
+
+    if (/scroll.*down/i.test(text)) {
+      return "scroll-down";
+    }
+
+    return "scroll-stop";
   }
 
   if (/link/i.test(text)) {

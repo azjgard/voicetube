@@ -1,5 +1,6 @@
 import Debug from "@utils/Debug";
 import PageSelector from "@utils/PageSelector";
+import constrainNumber from "../lib/constrainNumber";
 
 import InvalidCommandError from "../lib/errors/InvalidCommandError";
 
@@ -26,8 +27,11 @@ export function speed(text: string) {
     throw new InvalidCommandError(text);
   }
 
-  speedFloat = Math.max(MIN_SPEED, speedFloat);
-  speedFloat = Math.min(MAX_SPEED, speedFloat);
+  speedFloat = constrainNumber({
+    num: speedFloat,
+    min: MIN_SPEED,
+    max: MAX_SPEED,
+  });
 
   Debug.log(`Speed float: ${speedFloat}`);
 

@@ -4,6 +4,7 @@ import { search } from "./search";
 import { fullScreen } from "./fullScreen";
 import { speed } from "./speed";
 import { link } from "./link";
+import { scroll } from "./scroll";
 
 export const commands = {
   play,
@@ -12,6 +13,7 @@ export const commands = {
   fullScreen,
   speed,
   link,
+  scroll,
 };
 
-export { classifyCommand } from "../lib/classifyCommand";
+export { classifyCommand } from "./lib/classifyCommand";

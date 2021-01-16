@@ -1,6 +1,7 @@
 import Debug from "@utils/Debug";
+import PageSelector from "@utils/PageSelector";
 
-import { commands, classifyCommand } from "./commands";
+import { commands, classifyCommand } from "./commands/commands";
 import InvalidCommandError from "./lib/errors/InvalidCommandError";
 import createVoiceLinks from "./lib/createVoiceLinks";
 import createVoiceListener from "./lib/createVoiceListener";
@@ -9,8 +10,10 @@ import getCommandText from "./lib/getCommandText";
 export default function content() {
   Debug.log("Initializing Voice Listener..");
 
+  let scrollInterval: NodeJS.Timeout | null = null;
+
   const voiceLinkById: { [id: string]: string } = {};
-  const voiceLinksActive = window.location.search.includes("voice-links");
+  const voiceLinksActive = PageSelector.isVoiceLinksPage();
 
   if (voiceLinksActive) {
     createVoiceLinks((voiceLinkId, href) => {
@@ -33,27 +36,27 @@ export default function content() {
 
       switch (command) {
         case "search":
-          commands.search(commandText);
-          break;
+          return commands.search(commandText);
         case "speed":
-          commands.speed(commandText);
-          break;
+          return commands.speed(commandText);
+        case "scroll-up":
+        case "scroll-down":
+        case "scroll-stop":
+          if (scrollInterval) clearInterval(scrollInterval);
+          scrollInterval = commands.scroll(command);
+          return;
         case "link":
-          commands.link({
+          return commands.link({
             voiceLinkById,
             voiceLinksActive,
             text: commandText,
           });
-          break;
         case "play":
-          commands.play();
-          break;
+          return commands.play();
         case "pause":
-          commands.pause();
-          break;
+          return commands.pause();
         case "full-screen":
-          commands.fullScreen();
-          break;
+          return commands.fullScreen();
         default:
           throw new InvalidCommandError(commandText);
       }

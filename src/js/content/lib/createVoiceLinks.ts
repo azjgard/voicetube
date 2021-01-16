@@ -1,8 +1,8 @@
 import Debug from "@utils/Debug";
-import { createViewElement } from "../views";
+import { createViewElement } from "../views/views";
 
 const LINK_CHECK_INTERVAL_MS = 500;
-const LINK_CHECK_INTERVAL_TIMEOUT_MS = 5000;
+const LINK_CHECK_INTERVAL_TIMEOUT_MS = 10000;
 const LINK_DATA_ID_PROPERTY = "voice_link_id";
 
 /**
