@@ -2,6 +2,7 @@ import Debug from "@utils/Debug";
 
 import { commands, classifyCommand } from "./commands";
 import createVoiceListener from "./lib/createVoiceListener";
+import InvalidCommandError from "./lib/errors/InvalidCommandError";
 
 export default function content() {
   Debug.log("Initializing Voice Listener..");
@@ -34,7 +35,7 @@ export default function content() {
           commands.fullScreen();
           break;
         default:
-          throw new Error("Unsupported command!");
+          throw new InvalidCommandError(text);
       }
     },
   });
