@@ -58,6 +58,10 @@ export default function content() {
           return commands.pause();
         case "full-screen":
           return commands.fullScreen();
+        case "home":
+          return commands.home();
+        case "skip":
+          return commands.skip();
         default:
           throw new InvalidCommandError(commandText);
       }

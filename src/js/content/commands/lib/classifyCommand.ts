@@ -10,7 +10,9 @@ type Command =
   | "link"
   | "scroll-up"
   | "scroll-down"
-  | "scroll-stop";
+  | "scroll-stop"
+  | "home"
+  | "skip";
 
 export function classifyCommand(text: string): Command | null {
   if (!new RegExp(PREFIX).test(text)) {
@@ -52,6 +54,14 @@ export function classifyCommand(text: string): Command | null {
 
   if (/(screen|theater)/i.test(text)) {
     return "full-screen";
+  }
+
+  if (/home/i.test(text)) {
+    return "home";
+  }
+
+  if (/skip/i.test(text)) {
+    return "skip";
   }
 
   return "___" as Command;
