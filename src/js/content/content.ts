@@ -13,7 +13,8 @@ export default function content() {
   let scrollInterval: NodeJS.Timeout | null = null;
 
   const voiceLinkById: { [id: string]: string } = {};
-  const voiceLinksActive = PageSelector.isVoiceLinksPage();
+  // const voiceLinksActive = PageSelector.isVoiceLinksPage();
+  const voiceLinksActive = true;
 
   if (voiceLinksActive) {
     createVoiceLinks((voiceLinkId, href) => {
