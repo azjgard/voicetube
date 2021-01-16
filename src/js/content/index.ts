@@ -6,44 +6,52 @@ import createVoiceLinks from "./lib/createVoiceLinks";
 import createVoiceListener from "./lib/createVoiceListener";
 
 export default function content() {
-    Debug.log("Initializing Voice Listener..");
+  Debug.log("Initializing Voice Listener..");
 
-    const listener = createVoiceListener({
-        onResult: (text) => {
-            Debug.log("Voice input detected: " + text);
+  const voiceLinkById: { [id: string]: string } = {};
+  const voiceLinksActive = window.location.search.includes("voice-links");
 
-            const command = classifyCommand(text);
-            if (!command) {
-                return;
-            }
-
-            Debug.log(`Command received: ${command}`);
-
-            switch (command) {
-                case "search":
-                    commands.search(text);
-                    break;
-                case "speed":
-                    commands.speed(text);
-                    break;
-                case "play":
-                    commands.play();
-                    break;
-                case "pause":
-                    commands.pause();
-                    break;
-                case "full-screen":
-                    commands.fullScreen();
-                    break;
-                default:
-                    throw new InvalidCommandError(text);
-            }
-        },
+  if (voiceLinksActive) {
+    createVoiceLinks((voiceLinkId, href) => {
+      voiceLinkById[voiceLinkId] = href;
     });
+  }
 
-    listener.start();
+  const listener = createVoiceListener({
+    onResult: (text) => {
+      Debug.log("Voice input detected: " + text);
 
-    if (window.location.search.includes("voice-links")) {
-        createVoiceLinks();
-    }
+      const command = classifyCommand(text);
+      if (!command) {
+        return;
+      }
+
+      Debug.log(`Command received: ${command}`);
+
+      switch (command) {
+        case "search":
+          commands.search(text);
+          break;
+        case "speed":
+          commands.speed(text);
+          break;
+        case "link":
+          commands.link({ voiceLinkById, voiceLinksActive, text });
+          break;
+        case "play":
+          commands.play();
+          break;
+        case "pause":
+          commands.pause();
+          break;
+        case "full-screen":
+          commands.fullScreen();
+          break;
+        default:
+          throw new InvalidCommandError(text);
+      }
+    },
+  });
+
+  listener.start();
 }

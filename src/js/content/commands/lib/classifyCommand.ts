@@ -1,4 +1,4 @@
-type Command = "play" | "pause" | "full-screen" | "search" | "speed";
+type Command = "play" | "pause" | "full-screen" | "search" | "speed" | "link";
 
 export function classifyCommand(text: string): Command | null {
   if (/search/i.test(text)) {
@@ -7,6 +7,10 @@ export function classifyCommand(text: string): Command | null {
 
   if (/speed/i.test(text)) {
     return "speed";
+  }
+
+  if (/link/i.test(text)) {
+    return "link";
   }
 
   if (/play/i.test(text)) {
